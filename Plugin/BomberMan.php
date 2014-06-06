@@ -4,7 +4,7 @@
 __PocketMine Plugin__
 name=BomberMan
 description=Make a path using TNT and kill the others!
-version=0.6.3
+version=0.6.4
 author=Comedyman937
 class=BomberMan
 apiversion=11,12
@@ -14,6 +14,9 @@ apiversion=11,12
 ===============
    Changelog
 ===============
+0.6.4
+- Fixed "All Kill" Bug
+
 0.6.3
 - Improved Preformance
 
@@ -300,7 +303,9 @@ class BomberMan implements Plugin
             $this->api->chat->broadcast("[BomberMan] The game is over!  Unloading level for cleanup...");
 
             foreach($this->api->player->getAll() as $p){
+                if($p->getLevel() == $this->CONFIG["BomberManLevel"]){
                     $this->api->console->run("kill " . $p);
+                }
             }
             //$this->api->level->unloadLevel($this->CONFIG["BomberManLevel"]);
         }
