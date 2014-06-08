@@ -226,7 +226,7 @@ class BomberMan implements Plugin
         switch($event)
         {
             case "entity.health.change":
-                if($data["targetentity"]->level->getName() == $this->CONFIG["BomberManLevel"]){
+                if($data["targetentity"]->entity->level->getName() == $this->CONFIG["BomberManLevel"]){
                     return false;
                         }else{
                             return;
@@ -234,7 +234,7 @@ class BomberMan implements Plugin
                     break;
 
             case "player.pickup":
-                if($data["player"]->level->getName() == $this->CONFIG["BomberManLevel"]){
+                if($data["player"]->entity->level->getName() == $this->CONFIG["BomberManLevel"]){
                     return false;
                         }else{
                             return;
@@ -242,7 +242,7 @@ class BomberMan implements Plugin
                     break;
 
             case "player.block.break":
-                if($data["player"]->level->getName() == $this->CONFIG["BomberManLevel"]){
+                if($data["player"]->entity->level->getName() == $this->CONFIG["BomberManLevel"]){
                     return false;
                         }else{
                             return;
@@ -250,13 +250,13 @@ class BomberMan implements Plugin
                                 break;
 
             case "player.block.place":
-                if($data["player"]->level->getName() == $this->CONFIG["BomberManLevel"] and $BomberManActive == false){
+                if($data["player"]->entity->level->getName() == $this->CONFIG["BomberManLevel"] and $BomberManActive == false){
                     return "[BomberMan] The Game Has Not Started Yet!";
                     return false;
-                        }elseif(!($this->api->block->getItem(46)) and $BomberManActive == true and $data["player"]->level->getName() == $this->CONFIG["BomberManLevel"]){
+                        }elseif(!($this->api->block->getItem(46)) and $BomberManActive == true and $data["player"]->entity->level->getName() == $this->CONFIG["BomberManLevel"]){
                             return "[BomberMan] Only TNT Blocks Are Permitted on a BomberMan Map!";
                             return false;
-                                }elseif($BomberManActive == true and $data["player"]->level->getName() == $this->CONFIG["BomberManLevel"]){
+                                }elseif($BomberManActive == true and $data["player"]->entity->level->getName() == $this->CONFIG["BomberManLevel"]){
                                     $BomberManExplosion = new Explosion(new Position($data["block"]->x, $data["block"]->y, $data["block"]->z, $data["block"]->level), $this->CONFIG["ExplosionSize"]);
                                     $BomberManExplosion->explode();
 
@@ -284,7 +284,7 @@ class BomberMan implements Plugin
             $this->BomberManActive = true;
         }
                 foreach($this->api->player->getAll() as $p){
-                    if($p->level->getName() == $this->CONFIG["BomberManLevel"])
+                    if($p->entity->level->getName() == $this->CONFIG["BomberManLevel"])
                         $this->api->console->run("give " . $p . " 46 6");
                     }
                 }
@@ -314,7 +314,7 @@ class BomberMan implements Plugin
             $this->api->chat->broadcast("[BomberMan] The game is over!  Unloading level for cleanup...");
 
             foreach($this->api->player->getAll() as $p){
-                if($p->level->getName() == $this->CONFIG["BomberManLevel"]){
+                if($p->entity->level->getName() == $this->CONFIG["BomberManLevel"]){
                     $this->api->console->run("kill " . $p);
                 }
             }
