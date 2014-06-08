@@ -4,7 +4,7 @@
 __PocketMine Plugin__
 name=BomberMan
 description=Make a path using TNT and kill the others!
-version=0.6.7
+version=0.6.8
 author=Comedyman937
 class=BomberMan
 apiversion=11,12
@@ -14,11 +14,14 @@ apiversion=11,12
 ===============
    Changelog
 ===============
+0.6.8
+- Crash Fix #2
+
 0.6.7
 - Fixed TNT Giving
 
 0.6.6
-- Fixed Crashes
+- Crash Fix #1
 
 0.6.5
 - Fixed Level Unloading
@@ -284,7 +287,7 @@ class BomberMan implements Plugin
             $this->BomberManActive = true;
         }
                 foreach($this->api->player->getAll() as $p){
-                    if($p->entity->level->getName() == $this->CONFIG["BomberManLevel"])
+                    if($p->entity->level->getName() == $this->CONFIG["BomberManLevel"]){
                         $this->api->console->run("give " . $p . " 46 6");
                     }
                 }
